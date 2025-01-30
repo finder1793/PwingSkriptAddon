@@ -1,30 +1,67 @@
-# Default syntax examples for PwingSkriptAddon
+# PwingSkriptAddon Syntax Documentation
 
-# Cron event example
-cron_event:
-  example: '[on] cron "0 4 * * *" start'
+# File Operations
+file:
+  copy:
+    syntax: 'copy file %string% to %string%'
+    examples:
+      - 'copy file "plugins/config.yml" to "plugins/backups/config.yml"'
+      - 'copy file "worlds/world/level.dat" to "backup/world/level.dat"'
+  
+  delete:
+    syntax: 'delete file %string%'
+    examples:
+      - 'delete file "plugins/temp.yml"'
+      - 'delete file "logs/old.log"'
+  
+  rename:
+    syntax: 'rename file %string% to %string%'
+    examples:
+      - 'rename file "config.old.yml" to "config.yml"'
+      - 'rename file "plugins/outdated.yml" to "plugins/updated.yml"'
 
-# File operations examples
-file_operations:
-  copy_file:
-    example: 'copy file "source/path/file.txt" to "destination/path/file.txt"'
-  delete_file:
-    example: 'delete file "path/to/file.txt"'
-  rename_file:
-    example: 'rename "path/to/file.txt" to "path/to/newfile.txt"'
+# Directory Operations
+directory:
+  copy:
+    syntax: 'copy directory %string% to %string%'
+    examples:
+      - 'copy directory "plugins/MyPlugin" to "plugins/MyPlugin_backup"'
+      - 'copy directory "worlds/world" to "backups/world"'
+  
+  delete:
+    syntax: 'delete directory %string%'
+    examples:
+      - 'delete directory "plugins/OldPlugin"'
+      - 'delete directory "worlds/temp_world"'
+  
+  rename:
+    syntax: 'rename directory %string% to %string%'
+    examples:
+      - 'rename directory "plugins/OldName" to "plugins/NewName"'
+      - 'rename directory "world_backup" to "world_backup_old"'
 
-# Directory operations examples
-directory_operations:
-  copy_directory:
-    example: 'copy directory "source/path/dir" to "destination/path/dir"'
-  delete_directory:
-    example: 'delete directory "path/to/dir"'
-  rename_directory:
-    example: 'rename "path/to/dir" to "path/to/newdir"'
+# YAML Operations
+yaml:
+  edit:
+    syntax: 
+      - 'edit yaml %string% set %string% to %string%'
+      - 'edit yaml %string% set %string% to %string% at line %number%'
+    examples:
+      - 'edit yaml "config.yml" set "settings.enabled" to "true"'
+      - 'edit yaml "players.yml" set "player.health" to "100"'
+      - 'edit yaml "data.yml" set "version" to "2.0" at line 1'
 
-# YAML editing examples
-yaml_editing:
-  edit_yaml:
-    example: 'edit YAML file "path/to/file.yml" set "key" to "value"'
-  edit_yaml_line:
-    example: 'edit YAML file "path/to/file.yml" set "key" to "value" at line 3'
+# Cron Events
+cron:
+  syntax: 'on cron %string% start'
+  examples:
+    hourly: 'on cron "0 0 * * * ?" start:'
+    daily: 'on cron "0 0 0 * * ?" start:'
+    every_30_min: 'on cron "0 */30 * * * ?" start:'
+  common_expressions:
+    hourly: "0 0 * * * ?"
+    daily_midnight: "0 0 0 * * ?"
+    every_30_min: "0 */30 * * * ?"
+    every_monday: "0 0 0 * * MON"
+    weekly_backup: "0 0 0 * * SUN"
+    monthly: "0 0 0 1 * ?"
