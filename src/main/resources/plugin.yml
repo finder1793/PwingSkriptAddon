@@ -1,7 +1,11 @@
 name: PwingSkriptAddon
+version: '${version}'
 main: com.pwing.pwingskriptaddon.PwingSkriptAddon
-version: 1.0.0
+api-version: '1.16'
+depend: [Skript]
+libraries:
+  - net.kyori:adventure-api:4.14.0
+  - net.kyori:adventure-text-minimessage:4.14.0
+  - net.kyori:adventure-platform-bukkit:4.3.0
 description: An addon for PwingSkript that provides additional syntax and functionality.
 author: finder17
-api-version: 1.16
-depend: [Skript]

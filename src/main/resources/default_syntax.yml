@@ -68,3 +68,44 @@ cron:
     every_30_min: "0 */30 * * * ?"    # Every 30 minutes
     every_monday: "0 0 0 ? * MON"     # Every Monday at midnight
     monthly_first: "0 0 0 1 * ?"      # First day of every month
+
+# JSON Messages
+json:
+  message:
+    syntax: 'send json message %string% [with hover text %-string%] [(and|with) click command %-string%] to %players%'
+    examples:
+      - 'send json message "<#ff0000>This is red text!" to player'
+      - 'send json message "&aGreen &b&lBold Blue" to all players'
+      - 'send json message "<gradient:#FF0000:#00FF00>This is a gradient</gradient>" to player'
+      - 'send json message "<#ff0000>Click me!</#ff0000>" with hover text "&bHover text!" to player'
+      - 'send json message "<rainbow>Rainbow text!</rainbow>" with click command "give %player% diamond" to player'
+      - 'send json message "&6&lCLICK HERE" with hover text "<#00ff00>Get free diamonds!" and click command "give %player% diamond 64" to player'
+    color_formats:
+      hex: '<#RRGGBB>text</>' # Example: <#ff0000>Red text</>
+      gradient: '<gradient:#color1:#color2>text</gradient>'
+      rainbow: '<rainbow>text</rainbow>'
+      legacy: '&a, &b, &c, etc' # Traditional color codes
+      formatting: '&l (bold), &n (underline), &o (italic), &k (magic)'
+
+# Book Effects
+book:
+  open:
+    syntax: 
+      - 'open book titled %string% by %string% with page %string% to %players%'
+      - 'open book titled %string% by %string% with pages %strings% to %players%'
+    examples:
+      # Single page book
+      - 'open book titled "&6Cool Book" by "Author" with page "This is a single page book" to player'
+      # Multi-page book using list
+      - 'set {_pages::*} to "Page 1", "Page 2", "Page 3"'
+      - 'open book titled "My Book" by "Me" with pages {_pages::*} to player'
+      # Inline multi-page book
+      - 'open book titled "<#ff0000>Magic Book" by "Wizard" with pages "Page 1", "<click:run_command:/help>Click for help</click>" to player'
+    formatting:
+      commands: '<click:run_command:/command>Clickable text</click>'
+      urls: '<click:open_url:https://example.com>Click me!</click>'
+      hover: '<hover:show_text:"Hover text">Mouse over me!</hover>'
+      colors:
+        hex: '<#ff0000>Red text</>'
+        gradient: '<gradient:#ff0000:#00ff00>Cool gradient</gradient>'
+        rainbow: '<rainbow>Rainbow text</rainbow>'

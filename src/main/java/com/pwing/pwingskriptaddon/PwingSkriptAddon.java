@@ -5,6 +5,8 @@ import ch.njol.skript.SkriptAddon;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.pwing.pwingskriptaddon.events.CronEvent;
 import com.pwing.pwingskriptaddon.events.CronTriggerEvent;
+import com.pwing.pwingskriptaddon.effects.EffSendJsonMessage;
+import com.pwing.pwingskriptaddon.effects.EffOpenBook;
 import com.pwing.pwingskriptaddon.effects.file.*;
 import org.bukkit.Bukkit;
 
@@ -55,6 +57,14 @@ public class PwingSkriptAddon extends JavaPlugin {
             "edit yaml %string% set %string% to %string%", 
             "edit yaml %string% set %string% to %string% at line %number%");
         Skript.registerEffect(EffectRenameFileOrDirectory.class, "rename (file|directory) %string% to %string%");
+        
+        // JSON Message
+        Skript.registerEffect(EffSendJsonMessage.class, "send json message %string% [with hover text %-string%] [(and|with) click command %-string%] to %players%");
+        
+        // Book Effect
+        Skript.registerEffect(EffOpenBook.class, 
+            "open book titled %string% by %string% with page[s] %strings% to %players%",
+            "open book titled %string% by %string% with page %string% to %players%");
     }
 
     @Override
