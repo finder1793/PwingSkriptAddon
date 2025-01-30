@@ -3,16 +3,12 @@ package com.pwing.pwingskriptaddon.events;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.TriggerItem;
-import ch.njol.skript.log.ErrorQuality;
-import ch.njol.skript.log.SkriptLogger;
-import ch.njol.skript.util.Timespan;
 import ch.njol.skript.lang.SkriptParser;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.quartz.CronExpression;
 import com.pwing.pwingskriptaddon.PwingSkriptAddon;
+import org.quartz.CronExpression;
 
 import java.util.Date;
 import java.util.concurrent.Executors;
@@ -22,29 +18,44 @@ public class CronEvent extends SkriptEvent {
     private String cronExpression;
     private TriggerItem triggerItem;
 
-    // Custom event class for handling the actual event
-    public static class CronTriggerEvent extends Event {
-        private static final HandlerList handlers = new HandlerList();
-
-        public static HandlerList getHandlerList() {
-            return handlers;
-        }
-
-        @Override
-        public HandlerList getHandlers() {
-            return handlers;
-        }
-    }
-
     @Override
     public boolean init(Literal<?>[] args, int matchedPattern, SkriptParser.ParseResult parseResult) {
         cronExpression = args[0].toString();
-        return cronExpression != null;
+        if (cronExpression != null) {
+            Bukkit.getLogger().info("[PwingSkriptAddon] Loading cron task with expression: " + cronExpression);
+            try {
+                // Add helper message for common mistakes
+                if (!cronExpression.contains("?")) {
+                    Bukkit.getLogger().warning("[PwingSkriptAddon] Cron expression must contain a '?' for day-of-week or day-of-month");
+                    Bukkit.getLogger().warning("[PwingSkriptAddon] Example: \"0 0 4 * * ?\" for daily at 4 AM");
+                    return false;
+                }
+                
+                if (cronExpression.split(" ").length < 6) {
+                    Bukkit.getLogger().warning("[PwingSkriptAddon] Cron expression must have 6 parts: seconds minutes hours day-of-month month day-of-week");
+                    Bukkit.getLogger().warning("[PwingSkriptAddon] Example: \"0 0 4 * * ?\" for daily at 4 AM");
+                    return false;
+                }
+
+                // Validate cron expression
+                new CronExpression(cronExpression);
+                Bukkit.getLogger().info("[PwingSkriptAddon] Successfully validated cron expression: " + cronExpression);
+                return true;
+            } catch (Exception ex) {
+                Bukkit.getLogger().severe("[PwingSkriptAddon] Invalid cron expression: " + cronExpression);
+                Bukkit.getLogger().severe("[PwingSkriptAddon] Error: " + ex.getMessage());
+                Bukkit.getLogger().severe("[PwingSkriptAddon] Format: seconds minutes hours day-of-month month day-of-week");
+                Bukkit.getLogger().severe("[PwingSkriptAddon] Note: Either day-of-week OR day-of-month must be '?'");
+                Bukkit.getLogger().severe("[PwingSkriptAddon] Example: \"0 0 4 * * ?\" for daily at 4 AM");
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean check(Event e) {
-        return true;
+        return e instanceof CronTriggerEvent;
     }
 
     @Override
@@ -58,19 +69,31 @@ public class CronEvent extends SkriptEvent {
             var cron = new CronExpression(cronExpression);
             var nextRun = cron.getNextValidTimeAfter(new Date());
             var delay = nextRun.getTime() - System.currentTimeMillis();
+            
+            // Enhanced logging
+            Bukkit.getLogger().info("----------------------------------------");
+            Bukkit.getLogger().info("[PwingSkriptAddon] Scheduling new cron task:");
+            Bukkit.getLogger().info("[PwingSkriptAddon] Expression: " + cronExpression);
+            Bukkit.getLogger().info("[PwingSkriptAddon] Next execution: " + nextRun);
+            Bukkit.getLogger().info("[PwingSkriptAddon] Delay: " + delay + "ms");
+            Bukkit.getLogger().info("----------------------------------------");
+            
             scheduler.schedule(() -> Bukkit.getScheduler().runTask(PwingSkriptAddon.getInstance(), 
-                () -> TriggerItem.walk(getNextTriggerItem(), new CronTriggerEvent())), 
+                () -> {
+                    Bukkit.getLogger().info("[PwingSkriptAddon] Executing cron task: " + cronExpression);
+                    TriggerItem.walk(getNextTriggerItem(), new CronTriggerEvent());
+                    // Schedule next execution
+                    run(e);
+                }), 
                 delay, TimeUnit.MILLISECONDS);
         } catch (Exception ex) {
+            Bukkit.getLogger().severe("[PwingSkriptAddon] Failed to schedule cron task: " + cronExpression);
+            Bukkit.getLogger().severe("[PwingSkriptAddon] Error: " + ex.getMessage());
             ex.printStackTrace();
         }
     }
 
     private TriggerItem getNextTriggerItem() {
-        return getNext();
-    }
-
-    private TriggerItem getNext() {
         return getTriggerItem().getNext();
     }
 
@@ -80,9 +103,5 @@ public class CronEvent extends SkriptEvent {
 
     public void setTriggerItem(TriggerItem item) {
         this.triggerItem = item;
-    }
-
-    public String[] getSyntaxes() {
-        return new String[]{"[on] cron %string% start"};
     }
 }

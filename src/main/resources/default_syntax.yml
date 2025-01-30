@@ -54,14 +54,17 @@ yaml:
 # Cron Events
 cron:
   syntax: 'on cron %string% start'
+  format: 'seconds minutes hours day-of-month month day-of-week'
+  note: 'Either day-of-week OR day-of-month must be "?" (but not both)'
   examples:
-    hourly: 'on cron "0 0 * * * ?" start:'
-    daily: 'on cron "0 0 0 * * ?" start:'
-    every_30_min: 'on cron "0 */30 * * * ?" start:'
+    daily_4am: 'on cron "0 0 4 * * ?" start: # Every day at 4 AM'
+    every_monday: 'on cron "0 0 0 ? * MON" start: # Every Monday at midnight'
+    every_first: 'on cron "0 0 0 1 * ?" start: # First day of every month'
   common_expressions:
-    hourly: "0 0 * * * ?"
-    daily_midnight: "0 0 0 * * ?"
-    every_30_min: "0 */30 * * * ?"
-    every_monday: "0 0 0 * * MON"
-    weekly_backup: "0 0 0 * * SUN"
-    monthly: "0 0 0 1 * ?"
+    every_hour: "0 0 * * * ?"          # Every hour
+    every_minute: "0 * * * * ?"        # Every minute
+    daily_midnight: "0 0 0 * * ?"      # Every day at midnight
+    daily_4am: "0 0 4 * * ?"          # Every day at 4 AM
+    every_30_min: "0 */30 * * * ?"    # Every 30 minutes
+    every_monday: "0 0 0 ? * MON"     # Every Monday at midnight
+    monthly_first: "0 0 0 1 * ?"      # First day of every month

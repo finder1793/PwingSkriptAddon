@@ -4,6 +4,7 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.pwing.pwingskriptaddon.events.CronEvent;
+import com.pwing.pwingskriptaddon.events.CronTriggerEvent;
 import com.pwing.pwingskriptaddon.effects.file.*;
 import org.bukkit.Bukkit;
 
@@ -40,7 +41,7 @@ public class PwingSkriptAddon extends JavaPlugin {
     private void registerEvents() {
         // Register with proper event class
         Skript.registerEvent("cron", CronEvent.class, 
-            org.bukkit.event.Event.class,  // Use Bukkit Event as the base event class
+            CronTriggerEvent.class,  // Use our custom event class
             "cron %string% start");
     }
 
