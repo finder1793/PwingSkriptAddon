@@ -38,6 +38,7 @@ tasks.withType(JavaCompile) {
 }
 
 shadowJar {
+    archiveFileName = 'PwingSkriptAddon.jar'
     relocate 'org.quartz', 'com.pwing.pwingskriptaddon.libs.quartz'
     
     dependencies {

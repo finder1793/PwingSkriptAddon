@@ -1,5 +1,5 @@
 name: PwingSkriptAddon
-version: '${version}'
+version: 1.0.1
 main: com.pwing.pwingskriptaddon.PwingSkriptAddon
 api-version: '1.16'
 depend: [Skript]
