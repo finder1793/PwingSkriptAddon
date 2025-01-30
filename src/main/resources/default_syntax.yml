@@ -109,3 +109,29 @@ book:
         hex: '<#ff0000>Red text</>'
         gradient: '<gradient:#ff0000:#00ff00>Cool gradient</gradient>'
         rainbow: '<rainbow>Rainbow text</rainbow>'
+
+# Conditions
+conditions:
+  json:
+    syntax: 
+      - '%string% is valid json'
+      - '%string% is not valid json'
+    examples:
+      - 'if "{some::json}" is valid json:'
+      - 'if player''s data is not valid json:'
+  
+  directory:
+    syntax:
+      - 'directory %string% is empty'
+      - 'directory %string% is not empty'
+    examples:
+      - 'if directory "plugins/MyPlugin/data" is empty:'
+      - 'if directory "world/playerdata" is not empty:'
+  
+  permission:
+    syntax:
+      - '%player% is in permission group %string%'
+      - '%player% is not in permission group %string%'
+    examples:
+      - 'if player is in permission group "admin":'
+      - 'if player is not in group "default":'

@@ -7,6 +7,7 @@ import com.pwing.pwingskriptaddon.events.CronEvent;
 import com.pwing.pwingskriptaddon.events.CronTriggerEvent;
 import com.pwing.pwingskriptaddon.effects.EffSendJsonMessage;
 import com.pwing.pwingskriptaddon.effects.EffOpenBook;
+import com.pwing.pwingskriptaddon.conditions.*;
 import com.pwing.pwingskriptaddon.effects.file.*;
 import org.bukkit.Bukkit;
 
@@ -31,6 +32,8 @@ public class PwingSkriptAddon extends JavaPlugin {
             
             // Register effects
             registerEffects();
+            
+            registerConditions(); // Add this line after registerEffects()
             
             logger.info("PwingSkriptAddon has been enabled!");
         } catch (Exception e) {
@@ -65,6 +68,23 @@ public class PwingSkriptAddon extends JavaPlugin {
         Skript.registerEffect(EffOpenBook.class, 
             "open book titled %string% by %string% with page[s] %strings% to %players%",
             "open book titled %string% by %string% with page %string% to %players%");
+    }
+
+    private void registerConditions() {
+        // JSON condition
+        Skript.registerCondition(CondIsValidJson.class,
+            "%string% is valid json",
+            "%string% is(n't| not) valid json");
+            
+        // Directory condition
+        Skript.registerCondition(CondIsEmptyDirectory.class,
+            "directory %string% is empty",
+            "directory %string% is(n't| not) empty");
+            
+        // Permission group condition
+        Skript.registerCondition(CondHasPermissionGroup.class,
+            "%player% (is|has) [in] [permission] group %string%",
+            "%player% (isn't|is not|hasn't|has not) [in] [permission] group %string%");
     }
 
     @Override
