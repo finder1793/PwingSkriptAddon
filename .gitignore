@@ -1,0 +1,28 @@
+# Gradle build files
+.gradle/
+build/
+
+# IDEA project files
+.idea/
+*.iml
+
+# Eclipse project files
+.project
+.classpath
+.csettings/
+.settings/
+
+# VS Code project files
+.vscode/
+
+# MacOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+
+# Log files
+*.log
+
+# Other
+out/

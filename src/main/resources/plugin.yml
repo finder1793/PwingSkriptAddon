@@ -1,0 +1,7 @@
+name: PwingSkriptAddon
+main: com.pwing.pwingskriptaddon.PwingSkriptAddon
+version: 1.0.0
+description: An addon for PwingSkript that provides additional syntax and functionality.
+author: finder17
+api-version: 1.16
+depend: [Skript]

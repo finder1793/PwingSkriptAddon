@@ -1,0 +1,30 @@
+# Default syntax examples for PwingSkriptAddon
+
+# Cron event example
+cron_event:
+  example: '[on] cron "0 4 * * *" start'
+
+# File operations examples
+file_operations:
+  copy_file:
+    example: 'copy file "source/path/file.txt" to "destination/path/file.txt"'
+  delete_file:
+    example: 'delete file "path/to/file.txt"'
+  rename_file:
+    example: 'rename "path/to/file.txt" to "path/to/newfile.txt"'
+
+# Directory operations examples
+directory_operations:
+  copy_directory:
+    example: 'copy directory "source/path/dir" to "destination/path/dir"'
+  delete_directory:
+    example: 'delete directory "path/to/dir"'
+  rename_directory:
+    example: 'rename "path/to/dir" to "path/to/newdir"'
+
+# YAML editing examples
+yaml_editing:
+  edit_yaml:
+    example: 'edit YAML file "path/to/file.yml" set "key" to "value"'
+  edit_yaml_line:
+    example: 'edit YAML file "path/to/file.yml" set "key" to "value" at line 3'
