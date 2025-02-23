@@ -15,6 +15,10 @@ import java.util.logging.Logger;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.pwing.pwingskriptaddon.effects.file.EffectZipFile;
+import com.pwing.pwingskriptaddon.effects.file.EffectUnzipFile;
+import com.pwing.pwingskriptaddon.effects.file.EffectSftpTransfer;
+
 public class PwingSkriptAddon extends JavaPlugin {
     private static PwingSkriptAddon instance;
     private SkriptAddon addon;
@@ -84,6 +88,13 @@ public class PwingSkriptAddon extends JavaPlugin {
         Skript.registerEffect(EffOpenBook.class, 
             "open book titled %string% by %string% with page[s] %strings% to %players%",
             "open book titled %string% by %string% with page %string% to %players%");
+        
+        // Zip and Unzip
+        Skript.registerEffect(EffectZipFile.class, "zip file %string% to %string%");
+        Skript.registerEffect(EffectUnzipFile.class, "unzip file %string% to %string%");
+        
+        // SFTP Transfer
+        Skript.registerEffect(EffectSftpTransfer.class, "sftp transfer file %string% to %string% on host %string% with user %string% and password %string%");
     }
 
     private void registerConditions() {

@@ -20,6 +20,18 @@ file:
       - 'rename file "config.old.yml" to "config.yml"'
       - 'rename file "plugins/outdated.yml" to "plugins/updated.yml"'
 
+  zip:
+    syntax: 'zip file %string% to %string%'
+    examples:
+      - 'zip file "plugins/config.yml" to "plugins/config.zip"'
+      - 'zip file "worlds/world" to "backup/world.zip"'
+  
+  unzip:
+    syntax: 'unzip file %string% to %string%'
+    examples:
+      - 'unzip file "plugins/config.zip" to "plugins/config"'
+      - 'unzip file "backup/world.zip" to "worlds/world"'
+
 # Directory Operations
 directory:
   copy:
@@ -135,3 +147,10 @@ conditions:
     examples:
       - 'if player is in permission group "admin":'
       - 'if player is not in group "default":'
+
+# SFTP Operations
+sftp:
+  transfer:
+    syntax: 'sftp transfer file %string% to %string% on host %string% with user %string% and password %string%'
+    examples:
+      - 'sftp transfer file "local/path/file.txt" to "remote/path/file.txt" on host "sftp.example.com" with user "username" and password "password"'
