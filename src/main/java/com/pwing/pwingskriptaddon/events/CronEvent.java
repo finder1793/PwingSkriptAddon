@@ -37,19 +37,9 @@ public class CronEvent extends SkriptEvent {
                     return false;
                 }
 
-                // Validate cron expression and start task
+                // Validate cron expression
                 new CronExpression(cronExpression);
                 Bukkit.getLogger().info("[PwingSkriptAddon] Successfully validated cron expression: " + cronExpression);
-                
-                // Schedule the task on next tick to ensure trigger is set
-                Bukkit.getScheduler().runTask(PwingSkriptAddon.getInstance(), () -> {
-                    if (triggerItem != null) {
-                        startCronTask();
-                    } else {
-                        Bukkit.getLogger().severe("[PwingSkriptAddon] Failed to start cron task - trigger not set");
-                    }
-                });
-                
                 return true;
             } catch (Exception ex) {
                 Bukkit.getLogger().severe("[PwingSkriptAddon] Invalid cron expression: " + cronExpression);
@@ -76,6 +66,13 @@ public class CronEvent extends SkriptEvent {
     private void startCronTask() {
         if (triggerItem == null) {
             Bukkit.getLogger().severe("[PwingSkriptAddon] Cannot start cron task - trigger not set");
+            return;
+        }
+
+        // Test if we can get the next trigger item
+        TriggerItem nextItem = triggerItem.getNext();
+        if (nextItem == null) {
+            Bukkit.getLogger().severe("[PwingSkriptAddon] Cannot start cron task - next trigger item is null");
             return;
         }
 
@@ -122,9 +119,21 @@ public class CronEvent extends SkriptEvent {
     }
 
     public void setTriggerItem(TriggerItem item) {
-        this.triggerItem = item;
-        if (item != null && cronExpression != null) {
-            startCronTask();
+        Bukkit.getLogger().info("[PwingSkriptAddon] Setting trigger item for cron task: " + cronExpression);
+        if (item == null) {
+            Bukkit.getLogger().severe("[PwingSkriptAddon] Received null trigger item!");
+            return;
         }
+        this.triggerItem = item;
+        
+        // Start the task after a short delay to ensure everything is initialized
+        Bukkit.getScheduler().runTaskLater(PwingSkriptAddon.getInstance(), () -> {
+            if (triggerItem != null) {
+                Bukkit.getLogger().info("[PwingSkriptAddon] Starting cron task with trigger...");
+                startCronTask();
+            } else {
+                Bukkit.getLogger().severe("[PwingSkriptAddon] Trigger was null after delay - task not started");
+            }
+        }, 20L); // 1 second delay
     }
 }
