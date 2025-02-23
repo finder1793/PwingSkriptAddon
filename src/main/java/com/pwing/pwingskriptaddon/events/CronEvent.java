@@ -37,9 +37,19 @@ public class CronEvent extends SkriptEvent {
                     return false;
                 }
 
-                // Validate cron expression
+                // Validate cron expression and start task
                 new CronExpression(cronExpression);
                 Bukkit.getLogger().info("[PwingSkriptAddon] Successfully validated cron expression: " + cronExpression);
+                
+                // Schedule the task on next tick to ensure trigger is set
+                Bukkit.getScheduler().runTask(PwingSkriptAddon.getInstance(), () -> {
+                    if (triggerItem != null) {
+                        startCronTask();
+                    } else {
+                        Bukkit.getLogger().severe("[PwingSkriptAddon] Failed to start cron task - trigger not set");
+                    }
+                });
+                
                 return true;
             } catch (Exception ex) {
                 Bukkit.getLogger().severe("[PwingSkriptAddon] Invalid cron expression: " + cronExpression);
@@ -63,31 +73,41 @@ public class CronEvent extends SkriptEvent {
         return "cron " + cronExpression + " start";
     }
 
-    public void run(Event e) {
+    private void startCronTask() {
         if (triggerItem == null) {
-            Bukkit.getLogger().info("[PwingSkriptAddon] Trigger item is not set. Cannot schedule cron task.");
+            Bukkit.getLogger().severe("[PwingSkriptAddon] Cannot start cron task - trigger not set");
             return;
         }
+
         var scheduler = Executors.newScheduledThreadPool(1);
         try {
             var cron = new CronExpression(cronExpression);
             var nextRun = cron.getNextValidTimeAfter(new Date());
             var delay = nextRun.getTime() - System.currentTimeMillis();
             
-            // Enhanced logging
             Bukkit.getLogger().info("----------------------------------------");
-            Bukkit.getLogger().info("[PwingSkriptAddon] Scheduling new cron task:");
+            Bukkit.getLogger().info("[PwingSkriptAddon] Starting cron task:");
             Bukkit.getLogger().info("[PwingSkriptAddon] Expression: " + cronExpression);
-            Bukkit.getLogger().info("[PwingSkriptAddon] Next execution: " + nextRun);
-            Bukkit.getLogger().info("[PwingSkriptAddon] Delay: " + delay + "ms");
+            Bukkit.getLogger().info("[PwingSkriptAddon] First execution: " + nextRun);
+            Bukkit.getLogger().info("[PwingSkriptAddon] Initial delay: " + delay + "ms");
+            Bukkit.getLogger().info("[PwingSkriptAddon] Status: Successfully scheduled!");
+            Bukkit.getLogger().info("[PwingSkriptAddon] Next run in: " + String.format("%.2f", delay/1000.0/60.0) + " minutes");
             Bukkit.getLogger().info("----------------------------------------");
             
             scheduler.schedule(() -> Bukkit.getScheduler().runTask(PwingSkriptAddon.getInstance(), 
                 () -> {
-                    Bukkit.getLogger().info("[PwingSkriptAddon] Executing cron task: " + cronExpression);
-                    TriggerItem.walk(getNextTriggerItem(), new CronTriggerEvent());
+                    try {
+                        Bukkit.getLogger().info("[PwingSkriptAddon] ==== Executing cron task ====");
+                        Bukkit.getLogger().info("[PwingSkriptAddon] Expression: " + cronExpression);
+                        Bukkit.getLogger().info("[PwingSkriptAddon] Time: " + new Date());
+                        TriggerItem.walk(triggerItem.getNext(), new CronTriggerEvent());
+                        Bukkit.getLogger().info("[PwingSkriptAddon] ==== Execution complete ====");
+                    } catch (Exception e) {
+                        Bukkit.getLogger().severe("[PwingSkriptAddon] Error executing cron task: " + e.getMessage());
+                        e.printStackTrace();
+                    }
                     // Schedule next execution
-                    run(e);
+                    startCronTask();
                 }), 
                 delay, TimeUnit.MILLISECONDS);
         } catch (Exception ex) {
@@ -97,49 +117,14 @@ public class CronEvent extends SkriptEvent {
         }
     }
 
-    private TriggerItem getNextTriggerItem() {
-        return getTriggerItem().getNext();
-    }
-
     private TriggerItem getTriggerItem() {
         return triggerItem;
     }
 
     public void setTriggerItem(TriggerItem item) {
         this.triggerItem = item;
-    }
-
-    private void startCronTask() {
-        if (triggerItem == null) {
-            Bukkit.getLogger().info("[PwingSkriptAddon] Trigger item is not set. Cannot start cron task.");
-            return;
-        }
-        var scheduler = Executors.newScheduledThreadPool(1);
-        try {
-            var cron = new CronExpression(cronExpression);
-            var nextRun = cron.getNextValidTimeAfter(new Date());
-            var delay = nextRun.getTime() - System.currentTimeMillis();
-            
-            // Enhanced logging
-            Bukkit.getLogger().info("----------------------------------------");
-            Bukkit.getLogger().info("[PwingSkriptAddon] Scheduling new cron task:");
-            Bukkit.getLogger().info("[PwingSkriptAddon] Expression: " + cronExpression);
-            Bukkit.getLogger().info("[PwingSkriptAddon] Next execution: " + nextRun);
-            Bukkit.getLogger().info("[PwingSkriptAddon] Delay: " + delay + "ms");
-            Bukkit.getLogger().info("----------------------------------------");
-            
-            scheduler.schedule(() -> Bukkit.getScheduler().runTask(PwingSkriptAddon.getInstance(), 
-                () -> {
-                    Bukkit.getLogger().info("[PwingSkriptAddon] Executing cron task: " + cronExpression);
-                    TriggerItem.walk(getNextTriggerItem(), new CronTriggerEvent());
-                    // Schedule next execution
-                    startCronTask();
-                }), 
-                delay, TimeUnit.MILLISECONDS);
-        } catch (Exception ex) {
-            Bukkit.getLogger().info("[PwingSkriptAddon] Failed to schedule cron task: " + cronExpression);
-            Bukkit.getLogger().info("[PwingSkriptAddon] Error: " + ex.getMessage());
-            ex.printStackTrace();
+        if (item != null && cronExpression != null) {
+            startCronTask();
         }
     }
 }
