@@ -1,18 +1,24 @@
-
 package com.pwing.pwingskriptaddon.events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import com.pwing.pwingskriptaddon.PwingSkriptAddon;
 
-public class CronTriggerEvent extends Event {
-    private static final HandlerList HANDLERS = new HandlerList();
+public class CronTriggerEvent extends Event implements Listener {
+    private static final HandlerList handlers = new HandlerList();
+
+    public CronTriggerEvent() {
+        super(true); 
+    }
 
     public static HandlerList getHandlerList() {
-        return HANDLERS;
+        return handlers;
     }
 
     @Override
     public HandlerList getHandlers() {
-        return HANDLERS;
+        return handlers;
     }
 }

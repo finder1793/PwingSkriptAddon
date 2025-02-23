@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'com.github.SkriptLang:Skript:2.5.3'
+    compileOnly 'com.github.SkriptLang:Skript:2.10.0'
     implementation 'org.yaml:snakeyaml:1.29'
     compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
     implementation 'org.quartz-scheduler:quartz:2.3.2'  // Changed to implementation for shading
@@ -31,6 +31,8 @@ dependencies {
     compileOnly 'net.kyori:adventure-text-minimessage:4.14.0'
     compileOnly 'net.kyori:adventure-platform-bukkit:4.3.0'
     compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
+    implementation 'com.coreoz:wisp:2.4.0'
+    implementation 'ch.eitchnet:cron:1.6.2'  // Add this dependency
 }
 
 tasks.withType(JavaCompile) {
@@ -42,12 +44,19 @@ tasks.withType(JavaCompile) {
 shadowJar {
     archiveFileName = 'PwingSkriptAddon.jar'
     relocate 'org.quartz', 'com.pwing.pwingskriptaddon.libs.quartz'
+    relocate 'com.coreoz.wisp', 'com.pwing.pwingskriptaddon.libs.wisp'
+    relocate 'fc.cron', 'com.pwing.pwingskriptaddon.libs.cron'  // Add this relocation
     
     dependencies {
         include(dependency('org.quartz-scheduler:quartz'))
+        include(dependency('com.coreoz:wisp'))
+        include(dependency('ch.eitchnet:cron'))  // Include this dependency
     }
     
-    minimize()
+    minimize {
+        exclude(dependency('com.coreoz:wisp'))
+        exclude(dependency('ch.eitchnet:cron'))  // Exclude from minimization
+    }
 }
 
 build.dependsOn shadowJar

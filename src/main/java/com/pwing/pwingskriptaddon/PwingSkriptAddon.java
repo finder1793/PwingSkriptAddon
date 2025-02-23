@@ -12,11 +12,14 @@ import com.pwing.pwingskriptaddon.effects.file.*;
 import org.bukkit.Bukkit;
 
 import java.util.logging.Logger;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PwingSkriptAddon extends JavaPlugin {
     private static PwingSkriptAddon instance;
     private SkriptAddon addon;
     private static final Logger logger = Logger.getLogger("PwingSkriptAddon");
+    private static final Map<String, CronEvent> cronEvents = new ConcurrentHashMap<>();
 
     @Override
     public void onEnable() {
@@ -26,6 +29,9 @@ public class PwingSkriptAddon extends JavaPlugin {
         try {
             // Load classes from packages
             addon.loadClasses("com.pwing.pwingskriptaddon", "events", "effects");
+            
+            // Register CronTriggerEvent with Bukkit
+            getServer().getPluginManager().registerEvents(new CronTriggerEvent(), this);
             
             // Register events
             registerEvents();
@@ -44,10 +50,20 @@ public class PwingSkriptAddon extends JavaPlugin {
     }
 
     private void registerEvents() {
-        // Register with proper event class
-        Skript.registerEvent("cron", CronEvent.class, 
-            CronTriggerEvent.class,  // Use our custom event class
-            "cron %string% start");
+        try {
+            // Register the Skript event pattern
+            Skript.registerEvent("cron", CronEvent.class, CronTriggerEvent.class, 
+                "cron %string% start")
+                .description("Triggered based on a cron expression")
+                .examples("cron \"0 */5 * * * ?\" start:", 
+                         "cron \"0 0 4 * * ?\" start:")
+                .since("1.0.0");
+            
+            logger.info("Successfully registered Cron events!");
+        } catch (Exception e) {
+            logger.severe("Failed to register Cron event pattern: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void registerEffects() {
@@ -89,7 +105,18 @@ public class PwingSkriptAddon extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        // Shutdown all cron schedulers
+        cronEvents.clear();
         logger.info("PwingSkriptAddon has been disabled!");
+    }
+
+    public static void registerCronEvent(String expression, CronEvent event) {
+        cronEvents.put(expression, event);
+        logger.info("[PwingSkriptAddon] Registered cron event: " + expression);
+    }
+
+    public static CronEvent getCronEvent(String expression) {
+        return cronEvents.get(expression);
     }
 
     public static PwingSkriptAddon getInstance() {

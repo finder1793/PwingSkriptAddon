@@ -1,0 +1,11 @@
+# Cron task 1 - Every 5 minutes
+cron "0 */5 * * * ?" start:
+    send "[Backup] Checking for changes..." to console
+
+# Cron task 2 - Every hour
+cron "0 0 * * * ?" start:
+    send "[Cleanup] Running hourly cleanup..." to console
+
+# Cron task 3 - Daily at 4 AM
+cron "0 0 4 * * ?" start:
+    send "[Maintenance] Running daily maintenance..." to console
