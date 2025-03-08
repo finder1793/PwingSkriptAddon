@@ -9,16 +9,12 @@ import com.pwing.pwingskriptaddon.effects.EffSendJsonMessage;
 import com.pwing.pwingskriptaddon.effects.EffOpenBook;
 import com.pwing.pwingskriptaddon.conditions.*;
 import com.pwing.pwingskriptaddon.effects.file.*;
+import com.pwing.pwingskriptaddon.effects.EffPasteSchematic;
 import org.bukkit.Bukkit;
 
 import java.util.logging.Logger;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.pwing.pwingskriptaddon.effects.file.EffectZipFile;
-import com.pwing.pwingskriptaddon.effects.file.EffectUnzipFile;
-import com.pwing.pwingskriptaddon.effects.file.EffectSftpTransfer;
-import com.pwing.pwingskriptaddon.effects.EffPasteSchematic;
 
 public class PwingSkriptAddon extends JavaPlugin {
     private static PwingSkriptAddon instance;
@@ -44,7 +40,8 @@ public class PwingSkriptAddon extends JavaPlugin {
             // Register effects
             registerEffects();
             
-            registerConditions(); // Add this line after registerEffects()
+            // Register conditions
+            registerConditions();
             
             logger.info("PwingSkriptAddon has been enabled!");
         } catch (Exception e) {

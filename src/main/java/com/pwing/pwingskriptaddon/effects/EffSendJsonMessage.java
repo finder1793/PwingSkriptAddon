@@ -1,6 +1,5 @@
 package com.pwing.pwingskriptaddon.effects;
 
-import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -13,7 +12,6 @@ import org.bukkit.event.Event;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import com.pwing.pwingskriptaddon.PwingSkriptAddon;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 public class EffSendJsonMessage extends Effect {
     
