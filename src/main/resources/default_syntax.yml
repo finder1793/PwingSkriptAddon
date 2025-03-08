@@ -154,3 +154,10 @@ sftp:
     syntax: 'sftp transfer file %string% to %string% on host %string% with user %string% and password %string%'
     examples:
       - 'sftp transfer file "local/path/file.txt" to "remote/path/file.txt" on host "sftp.example.com" with user "username" and password "password"'
+
+# Fawe Operations
+fawe:
+  paste:
+    syntax: 'paste schematic %string% at %location%'
+    examples:
+      - 'paste schematic "plugins/schematics/castle.schem" at location(1200, 60, 1500, world("world"))'

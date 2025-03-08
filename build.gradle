@@ -34,6 +34,7 @@ dependencies {
     implementation 'com.coreoz:wisp:2.4.0'
     implementation 'ch.eitchnet:cron:1.6.2'  // Add this dependency
     implementation 'com.jcraft:jsch:0.1.55'
+    implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.4.0' // Add this line
 }
 
 tasks.withType(JavaCompile) {

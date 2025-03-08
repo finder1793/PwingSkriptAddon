@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.pwing.pwingskriptaddon.effects.file.EffectZipFile;
 import com.pwing.pwingskriptaddon.effects.file.EffectUnzipFile;
 import com.pwing.pwingskriptaddon.effects.file.EffectSftpTransfer;
+import com.pwing.pwingskriptaddon.effects.EffPasteSchematic;
 
 public class PwingSkriptAddon extends JavaPlugin {
     private static PwingSkriptAddon instance;
@@ -95,6 +96,9 @@ public class PwingSkriptAddon extends JavaPlugin {
         
         // SFTP Transfer
         Skript.registerEffect(EffectSftpTransfer.class, "sftp transfer file %string% to %string% on host %string% with user %string% and password %string%");
+        
+        // Paste Schematic
+        Skript.registerEffect(EffPasteSchematic.class, "paste schematic %string% at %location%");
     }
 
     private void registerConditions() {
