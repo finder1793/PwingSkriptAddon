@@ -7,6 +7,9 @@ import com.pwing.pwingskriptaddon.events.CronEvent;
 import com.pwing.pwingskriptaddon.events.CronTriggerEvent;
 import com.pwing.pwingskriptaddon.effects.EffSendJsonMessage;
 import com.pwing.pwingskriptaddon.effects.EffOpenBook;
+import com.pwing.pwingskriptaddon.effects.EffChangeWeather;
+import com.pwing.pwingskriptaddon.effects.EffSetTime;
+import com.pwing.pwingskriptaddon.effects.EffFindStructure;
 import com.pwing.pwingskriptaddon.conditions.*;
 import com.pwing.pwingskriptaddon.effects.file.*;
 import com.pwing.pwingskriptaddon.effects.EffPasteSchematic;
@@ -96,6 +99,11 @@ public class PwingSkriptAddon extends JavaPlugin {
         
         // Paste Schematic
         Skript.registerEffect(EffPasteSchematic.class, "paste schematic %string% at %location%");
+        
+        // World Management Effects
+        Skript.registerEffect(EffChangeWeather.class, "change weather in world %string% to %string%");
+        Skript.registerEffect(EffSetTime.class, "set time in world %string% to %number%");
+        Skript.registerEffect(EffFindStructure.class, "find structure %string% near x %number%, z %number% in world %string%");
     }
 
     private void registerConditions() {
@@ -113,6 +121,10 @@ public class PwingSkriptAddon extends JavaPlugin {
         Skript.registerCondition(CondHasPermissionGroup.class,
             "%player% (is|has) [in] [permission] group %string%",
             "%player% (isn't|is not|hasn't|has not) [in] [permission] group %string%");
+        
+        // Placeholder comparison condition
+        Skript.registerCondition(CondPlaceholderComparison.class,
+            "placeholder %string% (equal|equals|greater than|less than) %number%");
     }
 
     @Override

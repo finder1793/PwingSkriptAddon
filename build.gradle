@@ -19,6 +19,7 @@ repositories {
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url 'https://repo.papermc.io/repository/maven-public/' }
     maven { url 'https://jitpack.io' }
+    maven { url 'https://repo.helpch.at/releases' }
 }
 
 dependencies {
@@ -34,8 +35,9 @@ dependencies {
     implementation 'com.coreoz:wisp:2.4.0'
     implementation 'ch.eitchnet:cron:1.6.2'  // Add this dependency
     implementation 'com.jcraft:jsch:0.1.55'
-    implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.4.0' // Add this line
-}
+    implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.4.0'
+    compileOnly 'me.clip:placeholderapi:2.11.5'
+    }
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'

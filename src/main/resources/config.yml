@@ -1,0 +1,3 @@
+# Configuration for PwingSkriptAddon
+# Enable or disable the Biome Brush feature
+biome-brush-enabled: true
