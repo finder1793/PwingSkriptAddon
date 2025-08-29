@@ -14,10 +14,14 @@ import com.pwing.pwingskriptaddon.conditions.*;
 import com.pwing.pwingskriptaddon.effects.file.*;
 import com.pwing.pwingskriptaddon.effects.EffPasteSchematic;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.command.PluginCommand;
 
 import java.util.logging.Logger;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import com.pwing.pwingskriptaddon.biome.BiomeBrushCommand;
+import com.pwing.pwingskriptaddon.biome.BiomeBrushListener;
 
 public class PwingSkriptAddon extends JavaPlugin {
     private static PwingSkriptAddon instance;
@@ -45,6 +49,9 @@ public class PwingSkriptAddon extends JavaPlugin {
             
             // Register conditions
             registerConditions();
+
+            // Register biome brush feature if enabled and FAWE present
+            registerBiomeBrushIfAvailable();
             
             logger.info("PwingSkriptAddon has been enabled!");
         } catch (Exception e) {
@@ -125,6 +132,30 @@ public class PwingSkriptAddon extends JavaPlugin {
         // Placeholder comparison condition
         Skript.registerCondition(CondPlaceholderComparison.class,
             "placeholder %string% (equal|equals|greater than|less than) %number%");
+    }
+
+    private void registerBiomeBrushIfAvailable() {
+        saveDefaultConfig();
+        boolean enabled = getConfig().getBoolean("biome-brush-enabled", true);
+        Plugin fawe = Bukkit.getPluginManager().getPlugin("FastAsyncWorldEdit");
+        if (!enabled || fawe == null || !fawe.isEnabled()) {
+            logger.info("BiomeBrush disabled: enabled=" + enabled + ", FAWE=" + (fawe != null && fawe.isEnabled()));
+            return;
+        }
+
+        // Register command
+        PluginCommand cmd = getCommand("biomebrush");
+        if (cmd != null) {
+            BiomeBrushCommand executor = new BiomeBrushCommand();
+            cmd.setExecutor(executor);
+            cmd.setTabCompleter(executor);
+        } else {
+            logger.warning("Command 'biomebrush' not found in plugin.yml");
+        }
+
+        // Register listener
+        getServer().getPluginManager().registerEvents(new BiomeBrushListener(), this);
+        logger.info("BiomeBrush feature enabled (FAWE detected).");
     }
 
     @Override

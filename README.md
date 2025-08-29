@@ -21,8 +21,7 @@ Note: This document lists what the addon can do, the syntax you can use in your 
 
 ## Configuration
 - plugins/PwingSkriptAddon/config.yml
-  - biome-brush-enabled: true
-  - Currently reserved for future features. You can leave as default.
+  - biome-brush-enabled: true (requires FAWE installed). If true and FAWE is present, enables the Biome Brush feature and command.
 
 ## Features overview
 - Cron event: run Skript code on cron-like schedules.
@@ -32,6 +31,7 @@ Note: This document lists what the addon can do, the syntax you can use in your 
 - World utilities: change weather, set time, find nearest structure.
 - Conditions: validate JSON, check empty directory, check Vault permission group, compare PlaceholderAPI value to a number.
 - FAWE schematic pasting.
+- Biome Brush (requires FAWE and config enabled): Command `/biomebrush give <biome> [radius]` gives a brush item that right-click paints the biome in an area.
 
 ## Syntax reference and examples
 The following are the exact Skript patterns this addon registers. Use them in your .sk files.
