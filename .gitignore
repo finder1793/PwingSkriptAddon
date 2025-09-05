@@ -26,3 +26,5 @@ Thumbs.db
 
 # Other
 out/
+bin/
+library source/

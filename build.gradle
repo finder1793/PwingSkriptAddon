@@ -20,6 +20,7 @@ repositories {
     maven { url 'https://repo.papermc.io/repository/maven-public/' }
     maven { url 'https://jitpack.io' }
     maven { url 'https://repo.helpch.at/releases' }
+    maven { url 'https://repo1.maven.org/maven2/' }
 }
 
 dependencies {
@@ -37,6 +38,7 @@ dependencies {
     implementation 'com.jcraft:jsch:0.1.55'
     implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.4.0'
     compileOnly 'me.clip:placeholderapi:2.11.5'
+    implementation 'com.elmakers.mine.bukkit:EffectLib:10.2'
     }
 
 tasks.withType(JavaCompile) {
@@ -50,11 +52,13 @@ shadowJar {
     relocate 'org.quartz', 'com.pwing.pwingskriptaddon.libs.quartz'
     relocate 'com.coreoz.wisp', 'com.pwing.pwingskriptaddon.libs.wisp'
     relocate 'fc.cron', 'com.pwing.pwingskriptaddon.libs.cron'  // Add this relocation
+    relocate 'de.slikey', 'com.pwing.pwingskriptaddon.libs.effectlib'
     
     dependencies {
         include(dependency('org.quartz-scheduler:quartz'))
         include(dependency('com.coreoz:wisp'))
         include(dependency('ch.eitchnet:cron'))  // Include this dependency
+        include(dependency('com.elmakers.mine.bukkit:EffectLib'))
     }
     
     minimize {

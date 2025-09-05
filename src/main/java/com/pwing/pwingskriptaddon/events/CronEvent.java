@@ -1,6 +1,5 @@
 package com.pwing.pwingskriptaddon.events;
 
-import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptEventHandler;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SelfRegisteringSkriptEvent;
@@ -13,6 +12,7 @@ import org.bukkit.event.Event;
 
 import java.util.UUID;
 
+@SuppressWarnings("deprecation")
 public class CronEvent extends SelfRegisteringSkriptEvent {
     private Scheduler scheduler;
     private String schedulerId;

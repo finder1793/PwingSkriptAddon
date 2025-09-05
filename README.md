@@ -99,6 +99,81 @@ The following are the exact Skript patterns this addon registers. Use them in yo
 - Example: `paste schematic "plugins/schematics/castle.schem" at location(1200, 60, 1500, world("world"))`
 - Requires FAWE and compatible schematic format.
 
+### Effects: Particle Effects (EffectLib)
+PwingSkriptAddon includes a comprehensive set of particle effects powered by EffectLib. These create advanced visual effects like shapes, animations, and more. Requires EffectLib (bundled in the jar).
+
+### Basic Shapes
+- Circle: `create particle circle at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle circle at location of player with radius 5 using "FLAME" particle`
+- Sphere: `create particle sphere at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle sphere at location of player with radius 3 using "HEART" particle`
+- Cube: `create particle cube at %location% with size %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle cube at location of player with size 4 using "CRIT" particle`
+- Cylinder: `create particle cylinder at %location% with radius %number% height %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle cylinder at location of player with radius 2 height 5 using "PORTAL" particle`
+- Cloud: `create particle cloud at %location% with size %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle cloud at location of player with size 5 using "CLOUD" particle`
+- Atom: `create particle atom at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle atom at location of player with radius 3 using "SPELL_WITCH" particle`
+- Grid: `create particle grid at %location% with size %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle grid at location of player with size 4 using "REDSTONE" particle`
+
+### Arcs and Lines
+- Arc: `create particle arc at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle arc at location of player with radius 6 using "SPLASH" particle`
+- Line: `create particle line at %location% with length %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle line at location of player with length 10 using "END_ROD" particle`
+
+### Complex Shapes
+- Vortex (Spiral): `create particle vortex at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle vortex at location of player with radius 4 using "WITCH" particle`
+- Cone: `create particle cone at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle cone at location of player with radius 3 using "LAVA" particle`
+- Pyramid: `create particle pyramid at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle pyramid at location of player with radius 5 using "TOTEM" particle`
+
+### Animated Effects
+- Star: `create particle star at %location% using %string% particle [for %number% iterations]`
+  - Example: `create particle star at location of player using "FIREWORKS_SPARK" particle`
+- Heart: `create particle heart at %location% with size %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle heart at location of player with size 2 using "HEART" particle`
+- Music: `create particle music at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle music at location of player with radius 1 using "NOTE" particle`
+- Tornado: `create particle tornado at %location% with height %number% radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle tornado at location of player with height 10 radius 3 using "CLOUD" particle`
+- Flame: `create particle flame at %location% with particles %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle flame at location of player with particles 50 using "FLAME" particle`
+- Smoke: `create particle smoke at %location% with particles %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle smoke at location of player with particles 30 using "SMOKE_NORMAL" particle`
+- Fountain: `create particle fountain at %location% with radius %number% height %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle fountain at location of player with radius 2 height 8 using "WATER_SPLASH" particle`
+- Dragon: `create particle dragon at %location% with length %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle dragon at location of player with length 15 using "DRAGON_BREATH" particle`
+- DiscoBall: `create particle discoball at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle discoball at location of player with radius 4 using "FIREWORKS_SPARK" particle`
+- Bleed: `create particle bleed at %location% with height %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle bleed at location of player with height 6 using "REDSTONE" particle`
+
+### Special Effects
+- Shield: `create particle shield at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle shield at location of player with radius 3 using "FLAME" particle`
+- Explode: `create particle explode at %location% using %string% particle`
+  - Example: `create particle explode at location of player using "EXPLOSION_NORMAL" particle`
+- Donut: `create particle donut at %location% with radius %number% tube %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle donut at location of player with radius 4 tube 1 using "CRIT_MAGIC" particle`
+- DNA: `create particle dna at %location% with radius %number% length %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle dna at location of player with radius 2 length 10 using "SPELL_MOB" particle`
+- Earth: `create particle earth at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle earth at location of player with radius 5 using "VILLAGER_HAPPY" particle`
+- BigBang: `create particle bigbang at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle bigbang at location of player with radius 6 using "FIREWORKS_SPARK" particle`
+- Hill: `create particle hill at %location% with size %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle hill at location of player with size 8 using "COMPOSTER" particle`
+- Wave: `create particle wave at %location% with height %number% width %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle wave at location of player with height 3 width 10 using "DRIP_WATER" particle`
+- Love: `create particle love at %location% using %string% particle [for %number% iterations]`
+  - Example: `create particle love at location of player using "HEART" particle`
+
 ### Conditions
 - JSON validity:
   - `%string% is valid json`

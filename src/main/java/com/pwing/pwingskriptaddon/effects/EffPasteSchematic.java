@@ -8,8 +8,9 @@ import com.fastasyncworldedit.core.FaweAPI;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
-import com.sk89q.worldedit.function.operation.ForwardExtentCopy;
+import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
@@ -45,13 +46,20 @@ public class EffPasteSchematic extends Effect {
         }
 
         try (FileInputStream fis = new FileInputStream(schematicFile)) {
-            Clipboard clipboard = ClipboardFormats.findByFile(schematicFile).getReader(fis).read();
+            ClipboardFormat format = ClipboardFormats.findByFile(schematicFile);
+            if (format == null) {
+                return;
+            }
+            Clipboard clipboard = format.getReader(fis).read();
             EditSession editSession = WorldEdit.getInstance().newEditSessionBuilder()
                 .world(FaweAPI.getWorld(loc.getWorld().getName()))
                 .build();
-            ClipboardHolder holder = new ClipboardHolder(clipboard);
-            ForwardExtentCopy copy = new ForwardExtentCopy(holder.getClipboard(), holder.getClipboard().getRegion(), holder.getClipboard().getOrigin(), editSession, BlockVector3.at(loc.getX(), loc.getY(), loc.getZ()));
-            Operations.complete(copy);
+            try (ClipboardHolder holder = new ClipboardHolder(clipboard)) {
+                Operation operation = holder.createPaste(editSession)
+                    .to(BlockVector3.at(loc.getX(), loc.getY(), loc.getZ()))
+                    .build();
+                Operations.complete(operation);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
