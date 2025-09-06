@@ -18,6 +18,7 @@ public class EffectEditYaml extends BaseFileEffect {
     private Expression<String> value;
     private Expression<Integer> lineNumber;
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         filePath = (Expression<String>) exprs[0];

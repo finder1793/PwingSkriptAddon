@@ -18,6 +18,7 @@ public class EffectSftpTransfer extends BaseFileEffect {
     private Expression<String> username;
     private Expression<String> password;
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         localFilePath = (Expression<String>) exprs[0];

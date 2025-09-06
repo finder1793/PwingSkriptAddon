@@ -16,6 +16,7 @@ public class EffectUnzipFile extends BaseFileEffect {
     private Expression<String> sourcePath;
     private Expression<String> destinationPath;
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         sourcePath = (Expression<String>) exprs[0];

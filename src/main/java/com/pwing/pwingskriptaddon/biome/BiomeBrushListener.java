@@ -1,8 +1,9 @@
 package com.pwing.pwingskriptaddon.biome;
 
-import com.pwing.pwingskriptaddon.PwingSkriptAddon;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -31,20 +32,32 @@ public class BiomeBrushListener implements Listener {
         if (meta == null) return;
 
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
-        String biomeName = pdc.get(BiomeBrushCommand.KEY_BIOME, PersistentDataType.STRING);
+        String biomeKeyString = pdc.get(BiomeBrushCommand.KEY_BIOME, PersistentDataType.STRING);
         Integer radius = pdc.get(BiomeBrushCommand.KEY_RADIUS, PersistentDataType.INTEGER);
-        if (biomeName == null || radius == null) return; // not a biome brush
+        String worldName = pdc.get(BiomeBrushCommand.KEY_WORLD, PersistentDataType.STRING);
+        if (biomeKeyString == null || radius == null || worldName == null) return; // not a biome brush
 
-        Biome biome;
-        try {
-            biome = Biome.valueOf(biomeName);
-        } catch (IllegalArgumentException ex) {
-            player.sendMessage(ChatColor.RED + "Biome on the brush is invalid: " + biomeName);
+        NamespacedKey biomeKey = NamespacedKey.fromString(biomeKeyString);
+        Biome biome = null;
+        for (Biome b : Biome.values()) {
+            if (b.getKey().equals(biomeKey)) {
+                biome = b;
+                break;
+            }
+        }
+        if (biome == null) {
+            player.sendMessage(ChatColor.RED + "Biome on the brush is invalid: " + biomeKeyString);
             return;
         }
 
         Block clicked = event.getClickedBlock();
         if (clicked == null) return;
+
+        World brushWorld = Bukkit.getWorld(worldName);
+        if (brushWorld != null && !brushWorld.equals(clicked.getWorld())) {
+            player.sendMessage(ChatColor.RED + "This brush is for world " + worldName + ". You're in " + clicked.getWorld().getName() + ".");
+            return;
+        }
 
         int r = Math.max(1, Math.min(32, radius));
         int cx = clicked.getX();
@@ -61,10 +74,6 @@ public class BiomeBrushListener implements Listener {
                 try {
                     // 1.16 API supports 3D biome; we set at column across height with current y for reasonable effect
                     world.setBiome(x, y, z, biome);
-                    changed++;
-                } catch (NoSuchMethodError ignored) {
-                    // Fallback to 2D biome API if present in some servers
-                    world.setBiome(x, z, biome);
                     changed++;
                 } catch (Throwable t) {
                     // Ignore per-block errors to avoid spamming

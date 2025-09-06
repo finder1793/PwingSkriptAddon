@@ -27,6 +27,7 @@ public class BiomeBrushCommand implements CommandExecutor, TabCompleter {
     public static final String PERM = "pwingskriptaddon.biomebrush";
     public static final NamespacedKey KEY_BIOME = new NamespacedKey(PwingSkriptAddon.getInstance(), "biomebrush_biome");
     public static final NamespacedKey KEY_RADIUS = new NamespacedKey(PwingSkriptAddon.getInstance(), "biomebrush_radius");
+    public static final NamespacedKey KEY_WORLD = new NamespacedKey(PwingSkriptAddon.getInstance(), "biomebrush_world");
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -41,7 +42,7 @@ public class BiomeBrushCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length < 2 || !args[0].equalsIgnoreCase("give")) {
-            player.sendMessage(ChatColor.YELLOW + "Usage: /" + label + " give <biome> [radius]");
+            player.sendMessage(ChatColor.YELLOW + "Usage: /" + label + " give <biome> [radius] [world]");
             return true;
         }
 
@@ -64,21 +65,34 @@ public class BiomeBrushCommand implements CommandExecutor, TabCompleter {
             }
         }
 
+        World world = player.getWorld();
+        if (args.length >= 4) {
+            String worldName = args[3];
+            World targetWorld = Bukkit.getWorld(worldName);
+            if (targetWorld != null) {
+                world = targetWorld;
+            } else {
+                player.sendMessage(ChatColor.RED + "World '" + worldName + "' not found. Using current world: " + world.getName());
+            }
+        }
+
         ItemStack brush = new ItemStack(Material.GOLDEN_HOE, 1);
         ItemMeta meta = brush.getItemMeta();
         meta.setDisplayName(ChatColor.GOLD + "Biome Brush");
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Biome: " + ChatColor.AQUA + biome.name());
         lore.add(ChatColor.GRAY + "Radius: " + ChatColor.AQUA + radius);
+        lore.add(ChatColor.GRAY + "World: " + ChatColor.AQUA + world.getName());
         lore.add(ChatColor.DARK_GRAY + "Right-click a block to paint biome.");
         meta.setLore(lore);
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
-        pdc.set(KEY_BIOME, PersistentDataType.STRING, biome.name());
+        pdc.set(KEY_BIOME, PersistentDataType.STRING, biome.getKey().toString());
         pdc.set(KEY_RADIUS, PersistentDataType.INTEGER, radius);
+        pdc.set(KEY_WORLD, PersistentDataType.STRING, world.getName());
         brush.setItemMeta(meta);
 
         player.getInventory().addItem(brush);
-        player.sendMessage(ChatColor.GREEN + "Given biome brush for " + biome.name() + " with radius " + radius + ".");
+        player.sendMessage(ChatColor.GREEN + "Given biome brush for " + biome.name() + " with radius " + radius + " in world " + world.getName() + ".");
         return true;
     }
 

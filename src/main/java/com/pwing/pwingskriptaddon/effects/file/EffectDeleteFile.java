@@ -11,6 +11,7 @@ import java.nio.file.Files;
 public class EffectDeleteFile extends BaseFileEffect {
     private Expression<String> filePath;
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         filePath = (Expression<String>) exprs[0];

@@ -12,6 +12,7 @@ public class EffectCopyDirectory extends BaseFileEffect {
     private Expression<String> source;
     private Expression<String> destination;
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         source = (Expression<String>) exprs[0];

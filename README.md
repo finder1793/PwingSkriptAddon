@@ -29,6 +29,17 @@ Note: This document lists what the addon can do, the syntax you can use in your 
 - JSON chat messages: rich messages with hover and click actions using MiniMessage.
 - Books: open interactive books for players (MiniMessage supported).
 - World utilities: change weather, set time, find nearest structure.
+- String manipulation: hex conversion, encoding/decoding, randomization, case conversion.
+- Advanced file operations: detailed file info, attributes, permissions, ownership.
+- YAML operations: read, write, and validate YAML files.
+- URL operations: fetch content, check status, SSL verification, size information.
+- System information: CPU, RAM, disk space, time zones, system properties.
+- Server management: reload Skript, restart server, run commands.
+- Encoding operations: binary, ASCII, Unicode conversions.
+- Date and time operations: parsing, formatting, time zone conversions.
+- Encryption and security: hash functions, encryption/decryption.
+- Archiving operations: zip/unzip files and directories.
+- JSON operations: parse and extract data from JSON.
 - Conditions: validate JSON, check empty directory, check Vault permission group, compare PlaceholderAPI value to a number.
 - FAWE schematic pasting.
 - Biome Brush (requires FAWE and config enabled): Command `/biomebrush give <biome> [radius]` gives a brush item that right-click paints the biome in an area.
@@ -173,6 +184,226 @@ PwingSkriptAddon includes a comprehensive set of particle effects powered by Eff
   - Example: `create particle wave at location of player with height 3 width 10 using "DRIP_WATER" particle`
 - Love: `create particle love at %location% using %string% particle [for %number% iterations]`
   - Example: `create particle love at location of player using "HEART" particle`
+
+### Effects: String Manipulation
+- Convert number to hexadecimal: `convert %number% to hexadecimal`
+  - Example: `convert 255 to hexadecimal`
+- Convert hexadecimal to RGB: `convert hexadecimal %string% to rgb`
+  - Example: `convert hexadecimal "FF0000" to rgb`
+- Encode to Base64: `encode %string% to base64`
+  - Example: `encode "Hello World" to base64`
+- Encode to Morse code: `encode %string% to morse`
+  - Example: `encode "SOS" to morse`
+- Mirror text: `mirror %string%`
+  - Example: `mirror "hello"`
+- Randomize string: `randomize %string%`
+  - Example: `randomize "abcdef"`
+- Convert to uppercase: `convert %string% to uppercase`
+  - Example: `convert "hello" to uppercase`
+- Convert to lowercase: `convert %string% to lowercase`
+  - Example: `convert "HELLO" to lowercase`
+- Clear accented characters: `clear accented characters from %string%`
+  - Example: `clear accented characters from "café"`
+- Get string length: `length of %string%`
+  - Example: `length of "hello world"`
+- Check if string starts with: `%string% starts with %string%`
+  - Example: `"hello world" starts with "hello"`
+- Check if string ends with: `%string% ends with %string%`
+  - Example: `"hello world" ends with "world"`
+
+### Effects: Advanced File Operations
+- List directory contents: `list contents of directory %string%`
+  - Example: `list contents of directory "plugins"`
+- Get file name and extension: `get name and extension of file %string%`
+  - Example: `get name and extension of file "config.yml"`
+- Get file contents: `get contents of file %string%`
+  - Example: `get contents of file "config.yml"`
+- Edit file line: `edit line %number% of file %string% to %string%`
+  - Example: `edit line 5 of file "config.yml" to "new value"`
+- Create file: `create file %string%`
+  - Example: `create file "newfile.txt"`
+- Delete file: `delete file %string%`
+  - Example: `delete file "oldfile.txt"`
+- Download file: `download file from %string% to %string%`
+  - Example: `download file from "http://example.com/file.txt" to "downloads/file.txt"`
+- Insert line in file: `insert %string% at line %number% in file %string%`
+  - Example: `insert "new line" at line 3 in file "config.yml"`
+- Check if file exists: `file %string% exists`
+  - Example: `file "config.yml" exists`
+- Check if path is file: `%string% is a file`
+  - Example: `"config.yml" is a file`
+- Copy file: `copy file %string% to %string%`
+  - Example: `copy file "source.txt" to "destination.txt"`
+- Get file lines: `get lines of file %string%`
+  - Example: `get lines of file "config.yml"`
+- Get file time attributes: `get time attributes of file %string%`
+  - Example: `get time attributes of file "config.yml"`
+- Get file size: `get size of file %string%`
+  - Example: `get size of file "config.yml"`
+- Get file size in bytes: `get size in bytes of file %string%`
+  - Example: `get size in bytes of file "config.yml"`
+- Get directory size: `get size of directory %string%`
+  - Example: `get size of directory "plugins"`
+- Get directory size in bytes: `get size in bytes of directory %string%`
+  - Example: `get size in bytes of directory "plugins"`
+- Get absolute path: `get absolute path of %string%`
+  - Example: `get absolute path of "config.yml"`
+- Get file owner: `get owner of file %string%`
+  - Example: `get owner of file "config.yml"`
+- Get file attributes: `get attributes of file %string%`
+  - Example: `get attributes of file "config.yml"`
+- Rename/move file: `rename file %string% to %string%`
+  - Example: `rename file "oldname.txt" to "newname.txt"`
+- Check if directory: `%string% is a directory`
+  - Example: `"plugins" is a directory`
+- Check if symbolic link: `%string% is a symbolic link`
+  - Example: `"link" is a symbolic link`
+- Check if executable: `%string% is executable`
+  - Example: `"script.sh" is executable`
+- Get file creation time: `get creation time of file %string%`
+  - Example: `get creation time of file "config.yml"`
+- Get file deletion time: `get deletion time of file %string%`
+  - Example: `get deletion time of file "config.yml"`
+- Wipe file: `wipe file %string%`
+  - Example: `wipe file "sensitive.txt"`
+- Move file: `move file %string% to %string%`
+  - Example: `move file "file.txt" to "newlocation/file.txt"`
+- Write to file: `write %string% to file %string%`
+  - Example: `write "Hello World" to file "output.txt"`
+- Zip file: `zip file %string% to %string%`
+  - Example: `zip file "config.yml" to "config.zip"`
+
+### Effects: YAML Operations
+- Set YAML value: `set yaml %string% key %string% to %string%`
+  - Example: `set yaml "config.yml" key "setting.value" to "newvalue"`
+- Check if YAML exists: `yaml file %string% exists`
+  - Example: `yaml file "config.yml" exists`
+
+### Effects: URL Operations
+- Get URL contents: `get contents of url %string%`
+  - Example: `get contents of url "https://example.com"`
+- Read URL line: `read line %number% from url %string%`
+  - Example: `read line 1 from url "https://example.com"`
+- Get URL lines: `get lines from url %string%`
+  - Example: `get lines from url "https://example.com"`
+- Get URL size: `get size of url %string%`
+  - Example: `get size of url "https://example.com"`
+- Get URL size in bytes: `get size in bytes of url %string%`
+  - Example: `get size in bytes of url "https://example.com"`
+- Get URL response code: `get response code of url %string%`
+  - Example: `get response code of url "https://example.com"`
+- Check if URL is online: `url %string% is online`
+  - Example: `url "https://example.com" is online`
+- Get URL last modified: `get last modified date of url %string%`
+  - Example: `get last modified date of url "https://example.com"`
+- Get SSL verifier: `get ssl verifier of url %string%`
+  - Example: `get ssl verifier of url "https://example.com"`
+- Get SSL serial number: `get ssl serial number of url %string%`
+  - Example: `get ssl serial number of url "https://example.com"`
+- Get SSL issue date: `get ssl issue date of url %string%`
+  - Example: `get ssl issue date of url "https://example.com"`
+- Get SSL expire date: `get ssl expire date of url %string%`
+  - Example: `get ssl expire date of url "https://example.com"`
+- Get SSL algorithm: `get ssl algorithm of url %string%`
+  - Example: `get ssl algorithm of url "https://example.com"`
+- Get SSL version: `get ssl version of url %string%`
+  - Example: `get ssl version of url "https://example.com"`
+
+### Effects: System Information
+- Get time zone: `get current time zone`
+  - Example: `get current time zone`
+- Get CPU cores: `get cpu cores count`
+  - Example: `get cpu cores count`
+- Get loaded list: `get loaded plugins list`
+  - Example: `get loaded plugins list`
+- Get RAM information: `get ram information`
+  - Example: `get ram information`
+- Get CPU specifications: `get cpu specifications`
+  - Example: `get cpu specifications`
+- Get system time: `get system time`
+  - Example: `get system time`
+- Get system property: `get system property %string%`
+  - Example: `get system property "java.version"`
+- Check if OS: `is operating system %string%`
+  - Example: `is operating system "Windows"`
+- Get disk space: `get disk space`
+  - Example: `get disk space`
+
+### Effects: Server Management
+- Reload Skript: `reload skript`
+  - Example: `reload skript`
+- Restart server: `restart server`
+  - Example: `restart server`
+- Run OP command: `run op command %string%`
+  - Example: `run op command "op player"`
+- Run code: `run code %string%`
+  - Example: `run code "broadcast 'Hello World'"`
+- Run application: `run application %string%`
+  - Example: `run application "notepad.exe"`
+- Run command: `run command %string%`
+  - Example: `run command "say Hello"`
+- Run command with output: `run command %string% and get output`
+  - Example: `run command "list" and get output`
+- Reload Skript aliases: `reload skript aliases`
+  - Example: `reload skript aliases`
+
+### Effects: Encoding Operations
+- Convert to binary: `convert %string% to binary`
+  - Example: `convert "A" to binary`
+- Convert to ASCII: `convert %string% to ascii`
+  - Example: `convert "65" to ascii`
+- Convert from string: `convert from string %string%`
+  - Example: `convert from string "48656C6C6F"`
+- Convert from binary: `convert from binary %string%`
+  - Example: `convert from binary "01001000"`
+- Convert from Unicode: `convert from unicode %string%`
+  - Example: `convert from unicode "U+0048"`
+- Convert hexadecimal to number: `convert hexadecimal %string% to number`
+  - Example: `convert hexadecimal "FF" to number`
+- Convert RGB to hex: `convert rgb %string% to hex`
+  - Example: `convert rgb "255,0,0" to hex`
+
+### Effects: Date and Time Operations
+- Parse date: `parse date %string% with format %string%`
+  - Example: `parse date "2023-01-01" with format "yyyy-MM-dd"`
+- Convert date to Unix timestamp: `convert date %string% to unix timestamp`
+  - Example: `convert date "2023-01-01" to unix timestamp`
+- Convert Unix timestamp to date: `convert unix timestamp %number% to date`
+  - Example: `convert unix timestamp 1672531200 to date`
+- Format Unix timestamp: `format unix timestamp %number% as %string%`
+  - Example: `format unix timestamp 1672531200 as "yyyy-MM-dd"`
+- Get date inner value: `get inner value of date %string%`
+  - Example: `get inner value of date "2023-01-01"`
+- List time zones: `list all time zones`
+  - Example: `list all time zones`
+- Get time in time zone: `get time in time zone %string%`
+  - Example: `get time in time zone "America/New_York"`
+- Get region: `get region of time zone %string%`
+  - Example: `get region of time zone "America/New_York"`
+- Check if valid time zone: `%string% is a valid time zone`
+  - Example: `"America/New_York" is a valid time zone`
+
+### Effects: Encryption and Security
+- Encrypt string: `encrypt %string% with algorithm %string%`
+  - Example: `encrypt "secret" with algorithm "AES"`
+- Hash string: `hash %string% with algorithm %string%`
+  - Example: `hash "password" with algorithm "SHA-256"`
+
+### Effects: Archiving Operations
+- List zip contents: `list contents of zip file %string%`
+  - Example: `list contents of zip file "archive.zip"`
+- Zip files: `zip files %strings% to %string%`
+  - Example: `zip files "file1.txt", "file2.txt" to "archive.zip"`
+- Zip directory: `zip directory %string% to %string%`
+  - Example: `zip directory "plugins" to "plugins.zip"`
+- Unzip file: `unzip file %string% to %string%`
+  - Example: `unzip file "archive.zip" to "extracted"`
+
+### Effects: JSON Operations
+- Get JSON value by path: `get json value %string% from %string%`
+  - Example: `get json value "user.name" from "{\"user\":{\"name\":\"John\"}}"`
+- Get JSON IDs: `get json ids from %string%`
+  - Example: `get json ids from "{\"users\":[{\"id\":1},{\"id\":2}]}"`
 
 ### Conditions
 - JSON validity:
