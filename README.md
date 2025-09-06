@@ -59,7 +59,7 @@ The following are the exact Skript patterns this addon registers. Use them in yo
   - `cron "0 0 * * * ?" start:` send "[Cleanup] Running hourly cleanup..." to console
   - `cron "0 0 4 * * ?" start:` send "[Maintenance] Running daily maintenance..." to console
 
-### Effects: Files and directories
+### Effects: File Operations
 - Copy directory: `copy directory %string% to %string%`
   - Example: `copy directory "plugins/MyPlugin" to "plugins/MyPlugin_backup"`
 - Copy file: `copy file %string% to %string%`
@@ -79,139 +79,6 @@ The following are the exact Skript patterns this addon registers. Use them in yo
 - SFTP upload: `sftp transfer file %string% to %string% on host %string% with user %string% and password %string%`
   - Example: `sftp transfer file "local/path/file.txt" to "remote/path/file.txt" on host "sftp.example.com" with user "username" and password "password"`
   - Security note: Prefer using secrets management and restrict permissions; this effect sends credentials directly.
-
-### Effect: JSON chat messages (MiniMessage)
-- Pattern: `send json message %string% [with hover text %-string%] [(and|with) click command %-string%] to %players%`
-- Examples:
-  - `send json message "<#ff0000>This is red</#ff0000>" to player`
-  - `send json message "&6&lCLICK" with hover text "&bHover!" and click command "help" to player`
-  - MiniMessage supports hex, gradient, rainbow, and more.
-
-### Effect: Open book (MiniMessage pages)
-- Patterns:
-  - `open book titled %string% by %string% with page %string% to %players%`
-  - `open book titled %string% by %string% with page[s] %strings% to %players%`
-- Examples:
-  - `open book titled "&6Cool Book" by "Author" with page "Welcome!" to player`
-  - `set {_pages::*} to "Page 1", "Page 2"`
-    `open book titled "My Book" by "Me" with pages {_pages::*} to player`
-
-### Effects: World utilities
-- Change weather: `change weather in world %string% to %string%`
-  - weather values: clear, rain, thunder
-  - Example: `change weather in world "world" to "rain"`
-- Set time: `set time in world %string% to %number%`
-  - Example: `set time in world "world" to 6000`
-- Find nearest structure: `find structure %string% near x %number%, z %number% in world %string%`
-  - Structure key must match a server StructureType key. Example usage may store or use the result inside your script environment.
-
-### Effect: Paste schematic (FAWE)
-- Pattern: `paste schematic %string% at %location%`
-- Example: `paste schematic "plugins/schematics/castle.schem" at location(1200, 60, 1500, world("world"))`
-- Requires FAWE and compatible schematic format.
-
-### Effects: Particle Effects (EffectLib)
-PwingSkriptAddon includes a comprehensive set of particle effects powered by EffectLib. These create advanced visual effects like shapes, animations, and more. Requires EffectLib (bundled in the jar).
-
-### Basic Shapes
-- Circle: `create particle circle at %location% with radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle circle at location of player with radius 5 using "FLAME" particle`
-- Sphere: `create particle sphere at %location% with radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle sphere at location of player with radius 3 using "HEART" particle`
-- Cube: `create particle cube at %location% with size %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle cube at location of player with size 4 using "CRIT" particle`
-- Cylinder: `create particle cylinder at %location% with radius %number% height %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle cylinder at location of player with radius 2 height 5 using "PORTAL" particle`
-- Cloud: `create particle cloud at %location% with size %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle cloud at location of player with size 5 using "CLOUD" particle`
-- Atom: `create particle atom at %location% with radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle atom at location of player with radius 3 using "SPELL_WITCH" particle`
-- Grid: `create particle grid at %location% with size %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle grid at location of player with size 4 using "REDSTONE" particle`
-
-### Arcs and Lines
-- Arc: `create particle arc at %location% with radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle arc at location of player with radius 6 using "SPLASH" particle`
-- Line: `create particle line at %location% with length %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle line at location of player with length 10 using "END_ROD" particle`
-
-### Complex Shapes
-- Vortex (Spiral): `create particle vortex at %location% with radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle vortex at location of player with radius 4 using "WITCH" particle`
-- Cone: `create particle cone at %location% with radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle cone at location of player with radius 3 using "LAVA" particle`
-- Pyramid: `create particle pyramid at %location% with radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle pyramid at location of player with radius 5 using "TOTEM" particle`
-
-### Animated Effects
-- Star: `create particle star at %location% using %string% particle [for %number% iterations]`
-  - Example: `create particle star at location of player using "FIREWORKS_SPARK" particle`
-- Heart: `create particle heart at %location% with size %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle heart at location of player with size 2 using "HEART" particle`
-- Music: `create particle music at %location% with radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle music at location of player with radius 1 using "NOTE" particle`
-- Tornado: `create particle tornado at %location% with height %number% radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle tornado at location of player with height 10 radius 3 using "CLOUD" particle`
-- Flame: `create particle flame at %location% with particles %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle flame at location of player with particles 50 using "FLAME" particle`
-- Smoke: `create particle smoke at %location% with particles %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle smoke at location of player with particles 30 using "SMOKE_NORMAL" particle`
-- Fountain: `create particle fountain at %location% with radius %number% height %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle fountain at location of player with radius 2 height 8 using "WATER_SPLASH" particle`
-- Dragon: `create particle dragon at %location% with length %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle dragon at location of player with length 15 using "DRAGON_BREATH" particle`
-- DiscoBall: `create particle discoball at %location% with radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle discoball at location of player with radius 4 using "FIREWORKS_SPARK" particle`
-- Bleed: `create particle bleed at %location% with height %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle bleed at location of player with height 6 using "REDSTONE" particle`
-
-### Special Effects
-- Shield: `create particle shield at %location% with radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle shield at location of player with radius 3 using "FLAME" particle`
-- Explode: `create particle explode at %location% using %string% particle`
-  - Example: `create particle explode at location of player using "EXPLOSION_NORMAL" particle`
-- Donut: `create particle donut at %location% with radius %number% tube %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle donut at location of player with radius 4 tube 1 using "CRIT_MAGIC" particle`
-- DNA: `create particle dna at %location% with radius %number% length %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle dna at location of player with radius 2 length 10 using "SPELL_MOB" particle`
-- Earth: `create particle earth at %location% with radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle earth at location of player with radius 5 using "VILLAGER_HAPPY" particle`
-- BigBang: `create particle bigbang at %location% with radius %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle bigbang at location of player with radius 6 using "FIREWORKS_SPARK" particle`
-- Hill: `create particle hill at %location% with size %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle hill at location of player with size 8 using "COMPOSTER" particle`
-- Wave: `create particle wave at %location% with height %number% width %number% using %string% particle [for %number% iterations]`
-  - Example: `create particle wave at location of player with height 3 width 10 using "DRIP_WATER" particle`
-- Love: `create particle love at %location% using %string% particle [for %number% iterations]`
-  - Example: `create particle love at location of player using "HEART" particle`
-
-### Effects: String Manipulation
-- Convert number to hexadecimal: `convert %number% to hexadecimal`
-  - Example: `convert 255 to hexadecimal`
-- Convert hexadecimal to RGB: `convert hexadecimal %string% to rgb`
-  - Example: `convert hexadecimal "FF0000" to rgb`
-- Encode to Base64: `encode %string% to base64`
-  - Example: `encode "Hello World" to base64`
-- Encode to Morse code: `encode %string% to morse`
-  - Example: `encode "SOS" to morse`
-- Mirror text: `mirror %string%`
-  - Example: `mirror "hello"`
-- Randomize string: `randomize %string%`
-  - Example: `randomize "abcdef"`
-- Convert to uppercase: `convert %string% to uppercase`
-  - Example: `convert "hello" to uppercase`
-- Convert to lowercase: `convert %string% to lowercase`
-  - Example: `convert "HELLO" to lowercase`
-- Clear accented characters: `clear accented characters from %string%`
-  - Example: `clear accented characters from "café"`
-- Get string length: `length of %string%`
-  - Example: `length of "hello world"`
-- Check if string starts with: `%string% starts with %string%`
-  - Example: `"hello world" starts with "hello"`
-- Check if string ends with: `%string% ends with %string%`
-  - Example: `"hello world" ends with "world"`
-
-### Effects: Advanced File Operations
 - List directory contents: `list contents of directory %string%`
   - Example: `list contents of directory "plugins"`
 - Get file name and extension: `get name and extension of file %string%`
@@ -232,8 +99,6 @@ PwingSkriptAddon includes a comprehensive set of particle effects powered by Eff
   - Example: `file "config.yml" exists`
 - Check if path is file: `%string% is a file`
   - Example: `"config.yml" is a file`
-- Copy file: `copy file %string% to %string%`
-  - Example: `copy file "source.txt" to "destination.txt"`
 - Get file lines: `get lines of file %string%`
   - Example: `get lines of file "config.yml"`
 - Get file time attributes: `get time attributes of file %string%`
@@ -252,8 +117,6 @@ PwingSkriptAddon includes a comprehensive set of particle effects powered by Eff
   - Example: `get owner of file "config.yml"`
 - Get file attributes: `get attributes of file %string%`
   - Example: `get attributes of file "config.yml"`
-- Rename/move file: `rename file %string% to %string%`
-  - Example: `rename file "oldname.txt" to "newname.txt"`
 - Check if directory: `%string% is a directory`
   - Example: `"plugins" is a directory`
 - Check if symbolic link: `%string% is a symbolic link`
@@ -272,8 +135,6 @@ PwingSkriptAddon includes a comprehensive set of particle effects powered by Eff
   - Example: `write "Hello World" to file "output.txt"`
 - Zip file: `zip file %string% to %string%`
   - Example: `zip file "config.yml" to "config.zip"`
-
-### Effects: YAML Operations
 - Set YAML value: `set yaml %string% key %string% to %string%`
   - Example: `set yaml "config.yml" key "setting.value" to "newvalue"`
 - Check if YAML exists: `yaml file %string% exists`
@@ -309,43 +170,31 @@ PwingSkriptAddon includes a comprehensive set of particle effects powered by Eff
 - Get SSL version: `get ssl version of url %string%`
   - Example: `get ssl version of url "https://example.com"`
 
-### Effects: System Information
-- Get time zone: `get current time zone`
-  - Example: `get current time zone`
-- Get CPU cores: `get cpu cores count`
-  - Example: `get cpu cores count`
-- Get loaded list: `get loaded plugins list`
-  - Example: `get loaded plugins list`
-- Get RAM information: `get ram information`
-  - Example: `get ram information`
-- Get CPU specifications: `get cpu specifications`
-  - Example: `get cpu specifications`
-- Get system time: `get system time`
-  - Example: `get system time`
-- Get system property: `get system property %string%`
-  - Example: `get system property "java.version"`
-- Check if OS: `is operating system %string%`
-  - Example: `is operating system "Windows"`
-- Get disk space: `get disk space`
-  - Example: `get disk space`
-
-### Effects: Server Management
-- Reload Skript: `reload skript`
-  - Example: `reload skript`
-- Restart server: `restart server`
-  - Example: `restart server`
-- Run OP command: `run op command %string%`
-  - Example: `run op command "op player"`
-- Run code: `run code %string%`
-  - Example: `run code "broadcast 'Hello World'"`
-- Run application: `run application %string%`
-  - Example: `run application "notepad.exe"`
-- Run command: `run command %string%`
-  - Example: `run command "say Hello"`
-- Run command with output: `run command %string% and get output`
-  - Example: `run command "list" and get output`
-- Reload Skript aliases: `reload skript aliases`
-  - Example: `reload skript aliases`
+### Effects: Text Operations
+- Convert number to hexadecimal: `convert %number% to hexadecimal`
+  - Example: `convert 255 to hexadecimal`
+- Convert hexadecimal to RGB: `convert hexadecimal %string% to rgb`
+  - Example: `convert hexadecimal "FF0000" to rgb`
+- Encode to Base64: `encode %string% to base64`
+  - Example: `encode "Hello World" to base64`
+- Encode to Morse code: `encode %string% to morse`
+  - Example: `encode "SOS" to morse`
+- Mirror text: `mirror %string%`
+  - Example: `mirror "hello"`
+- Randomize string: `randomize %string%`
+  - Example: `randomize "abcdef"`
+- Convert to uppercase: `convert %string% to uppercase`
+  - Example: `convert "hello" to uppercase`
+- Convert to lowercase: `convert %string% to lowercase`
+  - Example: `convert "HELLO" to lowercase`
+- Clear accented characters: `clear accented characters from %string%`
+  - Example: `clear accented characters from "café"`
+- Get string length: `length of %string%`
+  - Example: `length of "hello world"`
+- Check if string starts with: `%string% starts with %string%`
+  - Example: `"hello world" starts with "hello"`
+- Check if string ends with: `%string% ends with %string%`
+  - Example: `"hello world" ends with "world"`
 
 ### Effects: Encoding Operations
 - Convert to binary: `convert %string% to binary`
@@ -363,7 +212,7 @@ PwingSkriptAddon includes a comprehensive set of particle effects powered by Eff
 - Convert RGB to hex: `convert rgb %string% to hex`
   - Example: `convert rgb "255,0,0" to hex`
 
-### Effects: Date and Time Operations
+### Effects: Datetime Operations
 - Parse date: `parse date %string% with format %string%`
   - Example: `parse date "2023-01-01" with format "yyyy-MM-dd"`
 - Convert date to Unix timestamp: `convert date %string% to unix timestamp`
@@ -383,13 +232,7 @@ PwingSkriptAddon includes a comprehensive set of particle effects powered by Eff
 - Check if valid time zone: `%string% is a valid time zone`
   - Example: `"America/New_York" is a valid time zone`
 
-### Effects: Encryption and Security
-- Encrypt string: `encrypt %string% with algorithm %string%`
-  - Example: `encrypt "secret" with algorithm "AES"`
-- Hash string: `hash %string% with algorithm %string%`
-  - Example: `hash "password" with algorithm "SHA-256"`
-
-### Effects: Archiving Operations
+### Effects: Archive Operations
 - List zip contents: `list contents of zip file %string%`
   - Example: `list contents of zip file "archive.zip"`
 - Zip files: `zip files %strings% to %string%`
@@ -404,6 +247,138 @@ PwingSkriptAddon includes a comprehensive set of particle effects powered by Eff
   - Example: `get json value "user.name" from "{\"user\":{\"name\":\"John\"}}"`
 - Get JSON IDs: `get json ids from %string%`
   - Example: `get json ids from "{\"users\":[{\"id\":1},{\"id\":2}]}"`
+
+### Effects: Minecraft Operations
+- Change weather: `change weather in world %string% to %string%`
+  - weather values: clear, rain, thunder
+  - Example: `change weather in world "world" to "rain"`
+- Set time: `set time in world %string% to %number%`
+  - Example: `set time in world "world" to 6000`
+- Find nearest structure: `find structure %string% near x %number%, z %number% in world %string%`
+  - Structure key must match a server StructureType key. Example usage may store or use the result inside your script environment.
+- Paste schematic: `paste schematic %string% at %location%`
+  - Example: `paste schematic "plugins/schematics/castle.schem" at location(1200, 60, 1500, world("world"))`
+  - Requires FAWE and compatible schematic format.
+- Open book: `open book titled %string% by %string% with page[s] %strings% to %players%`
+  - Examples:
+    - `open book titled "&6Cool Book" by "Author" with page "Welcome!" to player`
+    - `set {_pages::*} to "Page 1", "Page 2"`
+      `open book titled "My Book" by "Me" with pages {_pages::*} to player`
+- Play sound: `play sound %string% at %location% for %players% [with volume %number%] [pitch %number%]`
+  - Example: `play sound "BLOCK_NOTE_BLOCK_PLING" at location of player for player`
+
+### Effects: Particles
+- Circle: `create particle circle at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle circle at location of player with radius 5 using "FLAME" particle`
+- Sphere: `create particle sphere at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle sphere at location of player with radius 3 using "HEART" particle`
+- Cube: `create particle cube at %location% with size %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle cube at location of player with size 4 using "CRIT" particle`
+- Cylinder: `create particle cylinder at %location% with radius %number% height %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle cylinder at location of player with radius 2 height 5 using "PORTAL" particle`
+- Cloud: `create particle cloud at %location% with size %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle cloud at location of player with size 5 using "CLOUD" particle`
+- Atom: `create particle atom at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle atom at location of player with radius 3 using "SPELL_WITCH" particle`
+- Grid: `create particle grid at %location% with size %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle grid at location of player with size 4 using "REDSTONE" particle`
+- Arc: `create particle arc at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle arc at location of player with radius 6 using "SPLASH" particle`
+- Line: `create particle line at %location% with length %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle line at location of player with length 10 using "END_ROD" particle`
+- Vortex (Spiral): `create particle vortex at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle vortex at location of player with radius 4 using "WITCH" particle`
+- Cone: `create particle cone at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle cone at location of player with radius 3 using "LAVA" particle`
+- Pyramid: `create particle pyramid at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle pyramid at location of player with radius 5 using "TOTEM" particle`
+- Donut: `create particle donut at %location% with radius %number% tube %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle donut at location of player with radius 4 tube 1 using "CRIT_MAGIC" particle`
+- DNA: `create particle dna at %location% with radius %number% length %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle dna at location of player with radius 2 length 10 using "SPELL_MOB" particle`
+- Earth: `create particle earth at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle earth at location of player with radius 5 using "VILLAGER_HAPPY" particle`
+- BigBang: `create particle bigbang at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle bigbang at location of player with radius 6 using "FIREWORKS_SPARK" particle`
+- Hill: `create particle hill at %location% with size %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle hill at location of player with size 8 using "COMPOSTER" particle`
+- Wave: `create particle wave at %location% with height %number% width %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle wave at location of player with height 3 width 10 using "DRIP_WATER" particle`
+- Love: `create particle love at %location% using %string% particle [for %number% iterations]`
+  - Example: `create particle love at location of player using "HEART" particle`
+- Star: `create particle star at %location% using %string% particle [for %number% iterations]`
+  - Example: `create particle star at location of player using "FIREWORKS_SPARK" particle`
+- Heart: `create particle heart at %location% with size %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle heart at location of player with size 2 using "HEART" particle`
+- Music: `create particle music at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle music at location of player with radius 1 using "NOTE" particle`
+- Tornado: `create particle tornado at %location% with height %number% radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle tornado at location of player with height 10 radius 3 using "CLOUD" particle`
+- Flame: `create particle flame at %location% with particles %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle flame at location of player with particles 50 using "FLAME" particle`
+- Smoke: `create particle smoke at %location% with particles %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle smoke at location of player with particles 30 using "SMOKE_NORMAL" particle`
+- Fountain: `create particle fountain at %location% with radius %number% height %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle fountain at location of player with radius 2 height 8 using "WATER_SPLASH" particle`
+- Dragon: `create particle dragon at %location% with length %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle dragon at location of player with length 15 using "DRAGON_BREATH" particle`
+- DiscoBall: `create particle discoball at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle discoball at location of player with radius 4 using "FIREWORKS_SPARK" particle`
+- Bleed: `create particle bleed at %location% with height %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle bleed at location of player with height 6 using "REDSTONE" particle`
+- Shield: `create particle shield at %location% with radius %number% using %string% particle [for %number% iterations]`
+  - Example: `create particle shield at location of player with radius 3 using "FLAME" particle`
+- Explode: `create particle explode at %location% using %string% particle`
+  - Example: `create particle explode at location of player using "EXPLOSION_NORMAL" particle`
+
+### Effects: Server Operations
+- Reload Skript: `reload skript`
+  - Example: `reload skript`
+- Restart server: `restart server`
+  - Example: `restart server`
+- Run OP command: `run op command %string%`
+  - Example: `run op command "op player"`
+- Run code: `run code %string%`
+  - Example: `run code "broadcast 'Hello World'"`
+- Run application: `run application %string%`
+  - Example: `run application "notepad.exe"`
+- Run command: `run command %string%`
+  - Example: `run command "say Hello"`
+- Run command with output: `run command %string% and get output`
+  - Example: `run command "list" and get output`
+- Reload Skript aliases: `reload skript aliases`
+  - Example: `reload skript aliases`
+
+### Effects: System Operations
+- Get time zone: `get current time zone`
+  - Example: `get current time zone`
+- Get CPU cores: `get cpu cores count`
+  - Example: `get cpu cores count`
+- Get loaded list: `get loaded plugins list`
+  - Example: `get loaded plugins list`
+- Get RAM information: `get ram information`
+  - Example: `get ram information`
+- Get CPU specifications: `get cpu specifications`
+  - Example: `get cpu specifications`
+- Get system time: `get system time`
+  - Example: `get system time`
+- Get system property: `get system property %string%`
+  - Example: `get system property "java.version"`
+- Check if OS: `is operating system %string%`
+  - Example: `is operating system "Windows"`
+- Get disk space: `get disk space`
+  - Example: `get disk space`
+
+### Effects: Misc Operations
+- Send json message: `send json message %string% [with hover text %-string%] [(and|with) click command %-string%] to %players%`
+  - Examples:
+    - `send json message "<#ff0000>This is red</#ff0000>" to player`
+    - `send json message "&6&lCLICK" with hover text "&bHover!" and click command "help" to player`
+    - MiniMessage supports hex, gradient, rainbow, and more.
+- Encrypt string: `encrypt %string% with algorithm %string%`
+  - Example: `encrypt "secret" with algorithm "AES"`
+- Hash string: `hash %string% with algorithm %string%`
+  - Example: `hash "password" with algorithm "SHA-256"`
 
 ### Conditions
 - JSON validity:

@@ -113,6 +113,14 @@ public class PwingSkriptAddon extends JavaPlugin {
         Skript.registerEffect(com.pwing.pwingskriptaddon.effects.url.EffUrlLines.class, "get lines from url %string%");
         Skript.registerEffect(com.pwing.pwingskriptaddon.effects.url.EffUrlSize.class, "get size of url %string%");
         
+        // SSL Operations
+        Skript.registerEffect(com.pwing.pwingskriptaddon.effects.url.EffUrlSslVerifier.class, "get ssl verifier of url %string%");
+        Skript.registerEffect(com.pwing.pwingskriptaddon.effects.url.EffUrlSslSerial.class, "get ssl serial number of url %string%");
+        Skript.registerEffect(com.pwing.pwingskriptaddon.effects.url.EffUrlSslIssueDate.class, "get ssl issue date of url %string%");
+        Skript.registerEffect(com.pwing.pwingskriptaddon.effects.url.EffUrlSslExpireDate.class, "get ssl expire date of url %string%");
+        Skript.registerEffect(com.pwing.pwingskriptaddon.effects.url.EffUrlSslAlgorithm.class, "get ssl algorithm of url %string%");
+        Skript.registerEffect(com.pwing.pwingskriptaddon.effects.url.EffUrlSslVersion.class, "get ssl version of url %string%");
+        
         // JSON Message
         Skript.registerEffect(com.pwing.pwingskriptaddon.effects.json.EffSendJsonMessage.class, "send json message %string% [with hover text %-string%] [(and|with) click command %-string%] to %players%");
         
@@ -266,6 +274,7 @@ public class PwingSkriptAddon extends JavaPlugin {
         // Server Management
         Skript.registerEffect(com.pwing.pwingskriptaddon.effects.server.EffReloadSkript.class, "reload skript");
         Skript.registerEffect(com.pwing.pwingskriptaddon.effects.server.EffRestartServer.class, "restart server");
+        Skript.registerEffect(com.pwing.pwingskriptaddon.effects.server.EffRunApp.class, "run application %string%");
         Skript.registerEffect(com.pwing.pwingskriptaddon.effects.server.EffRunOpCmd.class, "run op command %string%");
         Skript.registerEffect(com.pwing.pwingskriptaddon.effects.server.EffRunCmd.class, "run command %string%");
         Skript.registerEffect(com.pwing.pwingskriptaddon.effects.server.EffRunCode.class, "run code %string%");
